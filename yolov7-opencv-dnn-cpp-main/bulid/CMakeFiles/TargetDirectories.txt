@@ -1,0 +1,3 @@
+/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/CMakeFiles/main.dir
+/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/CMakeFiles/edit_cache.dir
+/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/CMakeFiles/rebuild_cache.dir
