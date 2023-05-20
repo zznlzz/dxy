@@ -17,7 +17,7 @@ int main(int argc,char** argv)
 
     int deviceID = 0;//相机设备号
     // http://admin:admin@192.168.1.105:8081
-    cap.open("http://admin:admin@192.168.43.1:8081");
+    cap.open(0);
     if (!cap.isOpened())
     {
         cerr << "Error: unable to open camera." << endl;

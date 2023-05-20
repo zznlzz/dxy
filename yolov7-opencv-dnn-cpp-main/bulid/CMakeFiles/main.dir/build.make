@@ -73,29 +73,29 @@ CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
 CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/main.cpp.o -MF CMakeFiles/main.dir/main.cpp.o.d -o CMakeFiles/main.dir/main.cpp.o -c /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/main.cpp.o -MF CMakeFiles/main.dir/main.cpp.o.d -o CMakeFiles/main.dir/main.cpp.o -c /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp
 
 CMakeFiles/main.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp > CMakeFiles/main.dir/main.cpp.i
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp > CMakeFiles/main.dir/main.cpp.i
 
 CMakeFiles/main.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp -o CMakeFiles/main.dir/main.cpp.s
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp -o CMakeFiles/main.dir/main.cpp.s
 
 CMakeFiles/main.dir/yolo.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/yolo.cpp.o: ../yolo.cpp
 CMakeFiles/main.dir/yolo.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/yolo.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/yolo.cpp.o -MF CMakeFiles/main.dir/yolo.cpp.o.d -o CMakeFiles/main.dir/yolo.cpp.o -c /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/yolo.cpp.o -MF CMakeFiles/main.dir/yolo.cpp.o.d -o CMakeFiles/main.dir/yolo.cpp.o -c /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp
 
 CMakeFiles/main.dir/yolo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/yolo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp > CMakeFiles/main.dir/yolo.cpp.i
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp > CMakeFiles/main.dir/yolo.cpp.i
 
 CMakeFiles/main.dir/yolo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/yolo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp -o CMakeFiles/main.dir/yolo.cpp.s
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp -o CMakeFiles/main.dir/yolo.cpp.s
 
 # Object files for target main
 main_OBJECTS = \

@@ -1,4 +1,4 @@
-CMakeFiles/1.dir/capture.cpp.o: /home/zyt/1dxy/1/capture.cpp \
+CMakeFiles/1.dir/capture.cpp.o: /home/zyt/1dxy/Circle_detect/capture.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -330,10 +330,4 @@ CMakeFiles/1.dir/capture.cpp.o: /home/zyt/1dxy/1/capture.cpp \
  /usr/local/include/opencv4/opencv2/video.hpp \
  /usr/local/include/opencv4/opencv2/video/tracking.hpp \
  /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
- /home/zyt/1dxy/1/HoughCircles.hpp /home/zyt/1dxy/1/EllipseFitting.hpp \
- /usr/local/include/opencv4/opencv2/highgui/highgui.hpp \
- /usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
- /usr/local/include/opencv4/opencv2/imgproc/types_c.h \
- /usr/local/include/opencv4/opencv2/core/core_c.h \
- /usr/local/include/opencv4/opencv2/core/types_c.h \
- /usr/local/include/opencv4/opencv2/imgproc/imgproc_c.h
+ /home/zyt/1dxy/Circle_detect/HoughCircles.hpp

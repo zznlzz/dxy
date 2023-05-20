@@ -70,13 +70,13 @@ int main()
         if (img.empty() == false)
         {
 			Mat out = img;
-			cout << "0" << endl;
+			// cout << "0" << endl;
             if (test.Detect(img, net, result)) {
 				out = test.drawPred(img, result, color);
 			}else {
 				cout << "Error: detect failed!" << endl;
 			}
-			cout << "1" << endl;
+			// cout << "1" << endl;
 			imshow("camera", out);
         }else{
             cerr << "Error: unable to read imagine." << endl;

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/zyt/1dxy/1/capture.cpp" "CMakeFiles/1.dir/capture.cpp.o" "gcc" "CMakeFiles/1.dir/capture.cpp.o.d"
+  "/home/zyt/1dxy/Circle_detect/capture.cpp" "CMakeFiles/1.dir/capture.cpp.o" "gcc" "CMakeFiles/1.dir/capture.cpp.o.d"
   )
 
 # Targets to which this target links.
