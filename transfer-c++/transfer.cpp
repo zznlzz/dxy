@@ -20,11 +20,12 @@ using namespace dnn;
 
 cv::Mat hough(cv::Mat src);
 char coord[50] = {0};
+int flag = 0;
 
 int main() {
-
+    extern int flag;
     string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/best.onnx";
-
+    coord[0] = '0';
     Yolo test;
 	Net net;
 	if (test.readModel(net, model_path, USE_CUDA)) {
@@ -90,9 +91,11 @@ int main() {
 		// 	}
         imshow("frame", img);
 
+        //if (flag == 1){
+        //send(sock, "0", 1, 0);
         send(sock, coord, strlen(coord), 0);
-        
-        std::cout << "坐标数据已发送" << std::endl;
+        //std::cout << "坐标数据已发送" << std::endl;
+        //}
 
         if (waitKey(1) == 'q') {
             break;
@@ -107,6 +110,7 @@ int main() {
 
 cv::Mat hough(cv::Mat src)
 {
+    extern int flag;
     cv::Mat dst, out;    
     // cv::medianBlur(src, dst, 3);
     cv::cvtColor(src, dst, cv::COLOR_RGB2GRAY);// 改为灰度图
@@ -117,7 +121,9 @@ cv::Mat hough(cv::Mat src)
     // dp-累加分辨率大小-默认为1   两圆心之间最小距离   Canny边缘检测高阈值-低阈值自动为高阈值一半
     // 越大检测的圆越接近完美圆形   圆半径最小值   圆半径最大值
     // dp值越大，累加器分辨率越低，运行速度越快
+    flag = 0;
     for(int i=0; i<circles.size(); i++){
+        flag = 1;
         cv::Vec3f c = circles[i];
         cv::circle(src, cv::Point(c[0],c[1]), c[2], cv::Scalar(0,255,255), 3, cv::LINE_AA);// 圆周
         cv::circle(src, cv::Point(c[0],c[1]), 2, cv::Scalar(255,0,0), 3, cv::LINE_AA);// 圆心
@@ -136,12 +142,11 @@ cv::Mat hough(cv::Mat src)
 
         char xx[20]={0};
         char yy[20]={0};
-        sprintf(xx, "%.3f", p[0]);
-        sprintf(yy, "%.3f", p[1]);
+        sprintf(xx, "%.6f", p[0]);
+        sprintf(yy, "%.6f", p[1]);
         strcpy(coord, xx);
         strcat(coord, ",");
         strcat(coord, yy);
-
     }  
     return src;
 }
