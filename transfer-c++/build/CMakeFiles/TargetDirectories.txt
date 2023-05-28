@@ -1,0 +1,3 @@
+/home/zyt/1dxy/transfer-c++/build/CMakeFiles/main.dir
+/home/zyt/1dxy/transfer-c++/build/CMakeFiles/edit_cache.dir
+/home/zyt/1dxy/transfer-c++/build/CMakeFiles/rebuild_cache.dir

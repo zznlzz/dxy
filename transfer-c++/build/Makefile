@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/zyt/1dxy/transfer-c++
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zyt/1dxy/transfer-c++/bulid
+CMAKE_BINARY_DIR = /home/zyt/1dxy/transfer-c++/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zyt/1dxy/transfer-c++/bulid/CMakeFiles /home/zyt/1dxy/transfer-c++/bulid//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zyt/1dxy/transfer-c++/build/CMakeFiles /home/zyt/1dxy/transfer-c++/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zyt/1dxy/transfer-c++/bulid/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zyt/1dxy/transfer-c++/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

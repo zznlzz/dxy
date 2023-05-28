@@ -129,21 +129,35 @@ cv::Mat hough(cv::Mat src)
         cv::circle(src, cv::Point(c[0],c[1]), 2, cv::Scalar(255,0,0), 3, cv::LINE_AA);// 圆心
         // std::cout << "x = " << c[0] << "y = " << c[1] << std::endl;
 
-        Matrix3d matrix; // 内参矩阵
-        matrix <<   5.866604127618223e+02,            0,                  0, 
+        Matrix3d K; // 内参矩阵
+        K <<   5.866604127618223e+02,            0,                  0, 
                             0,               5.862334531989521e+02,       0, 
                     3.091697495003905e+02,   2.301569065668424e+02,       1;
         
-        Vector3d origin_coord ;
-        origin_coord << c[0], c[1], 1;
-        Vector3d p;
-        p = matrix.inverse() * origin_coord;
-        std::cout << "x = " << p[0] << "y = " << p[1] << std::endl;
+        // 畸变矩阵
+        Vector2d D;
+        D << 0.108035628286270, -0.264954789302431;
+
+        // 像素坐标
+        Vector2d p;
+        p << c[0], c[1];
+
+        // 归一化坐标
+        Vector3d p_norm = K.inverse() * Vector3d(p(0), p(1), 1);
+
+        // 去除畸变
+        double r2 = p_norm(0) * p_norm(0) + p_norm(1) * p_norm(1);
+        Vector2d p_undistorted = p_norm.head<2>() * (1 + r2 * D(0)) + Vector2d(2 * D(1) * p_norm(0) * p_norm(1), D(0) * (r2 + 2 * p_norm(0) * p_norm(0)));
+
+        // 像素坐标
+        Vector3d p_pixel = K * Vector3d(p_undistorted(0), p_undistorted(1), 1);
+
+        std::cout << "去除畸变后的像素坐标：(" << p_pixel(0) << ", " << p_pixel(1) << ")" << std::endl;
 
         char xx[20]={0};
         char yy[20]={0};
-        sprintf(xx, "%.6f", p[0]);
-        sprintf(yy, "%.6f", p[1]);
+        sprintf(xx, "%.6f", p_pixel(0));
+        sprintf(yy, "%.6f", p_pixel(1));
         strcpy(coord, xx);
         strcat(coord, ",");
         strcat(coord, yy);

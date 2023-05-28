@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/zyt/1dxy/transfer-c++")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/zyt/1dxy/transfer-c++/bulid")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/zyt/1dxy/transfer-c++/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)
