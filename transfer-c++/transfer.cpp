@@ -152,12 +152,13 @@ cv::Mat hough(cv::Mat src)
         // 像素坐标
         Vector3d p_pixel = K * Vector3d(p_undistorted(0), p_undistorted(1), 1);
 
-        std::cout << "去除畸变后的像素坐标：(" << p_pixel(0) << ", " << p_pixel(1) << ")" << std::endl;
+        Vector2d p_actual_pixel(p_pixel(0) / p_pixel(2), p_pixel(1) / p_pixel(2));
+        std::cout << "去除畸变后的像素坐标：(" << p_actual_pixel(0) << ", " << p_actual_pixel(1) << ")" << std::endl;    
 
         char xx[20]={0};
         char yy[20]={0};
-        sprintf(xx, "%.6f", p_pixel(0));
-        sprintf(yy, "%.6f", p_pixel(1));
+        sprintf(xx, "%.6f", p_actual_pixel(0));
+        sprintf(yy, "%.6f", p_actual_pixel(1));
         strcpy(coord, xx);
         strcat(coord, ",");
         strcat(coord, yy);
