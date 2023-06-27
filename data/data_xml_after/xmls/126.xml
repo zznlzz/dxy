@@ -1,0 +1,21 @@
+<annotation>
+		<folder>VOC2007</folder>
+		<filename>126.jpg</filename>
+		<size>
+			<width>990</width>
+			<height>594</height>
+			<depth>3</depth>
+		</size>
+		<object>
+			<name>H</name>
+			<pose>Unspecified</pose>
+			<truncated>0</truncated>
+			<difficult>0</difficult>
+			<bndbox>
+				<xmin>268</xmin>
+				<ymin>320</ymin>
+				<xmax>583</xmax>
+				<ymax>397</ymax>
+			</bndbox>
+		</object>
+	</annotation>

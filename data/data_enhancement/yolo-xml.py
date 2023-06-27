@@ -94,4 +94,4 @@ def makexml(txtPath, xmlPath, picPath):  # 读取txt路径，xml保存路径，�
                 f.close()
 
 
-makexml("/home/zyt/1dxy/data_yolo/labels/","/home/zyt/1dxy/data_xml/","/home/zyt/1dxy/data_yolo/images/")
+makexml("/home/zyt/1dxy/data/data_yolo/labels/","/home/zyt/1dxy/data/data_xml/","/home/zyt/1dxy/data/data_yolo/images/")

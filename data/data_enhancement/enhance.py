@@ -102,17 +102,17 @@ def mkdir(path):
 
 if __name__ == "__main__":
 
-    IMG_DIR = "/home/zyt/1dxy/data_yolo/images/"
-    XML_DIR = "/home/zyt/1dxy/data_xml/"    # 增强前的XML文件夹路径
+    IMG_DIR = "/home/zyt/1dxy/data/data_yolo/images/"
+    XML_DIR = "/home/zyt/1dxy/data/data_xml/"    # 增强前的XML文件夹路径
 
-    AUG_XML_DIR = "/home/zyt/1dxy/data_xml_after/xmls/"  # 存储增强后的XML文件夹路径
+    AUG_XML_DIR = "/home/zyt/1dxy/data/data_xml_after/xmls/"  # 存储增强后的XML文件夹路径
     try:
         shutil.rmtree(AUG_XML_DIR)
     except FileNotFoundError as e:
         a = 1
     mkdir(AUG_XML_DIR)
 
-    AUG_IMG_DIR = "/home/zyt/1dxy/data_xml_after/images/"  # 存储增强后的影像文件夹路径
+    AUG_IMG_DIR = "/home/zyt/1dxy/data/data_xml_after/images/"  # 存储增强后的影像文件夹路径
     try:
         shutil.rmtree(AUG_IMG_DIR)
     except FileNotFoundError as e:
@@ -131,11 +131,11 @@ if __name__ == "__main__":
         iaa.Fliplr(0.5),  # 水平翻转
         iaa.Flipud(0.5),  # 垂直翻转
         # iaa.ContrastNormalization((0.5, 1.5))  # 对比度增强
-        iaa.Multiply((1.2, 1.5)),  # change brightness, doesn't affect BBs
-        iaa.GaussianBlur(sigma=(0, 3.0)),  # iaa.GaussianBlur(0.5),
+        # iaa.Multiply((1.2, 1.5)),  # change brightness, doesn't affect BBs
+        # iaa.GaussianBlur(sigma=(0, 3.0)),  # iaa.GaussianBlur(0.5),
         iaa.Affine( # 仿射变换
             translate_px={"x": 15, "y": 15},
-            scale=(0.7, 1.5),   # 将图像缩放0.7-1.5倍
+            # scale=(0.7, 1.5),   # 将图像缩放0.7-1.5倍
             rotate=(-45,45),    # 将图像旋转-45到45度
         )  # translate by 40/60px on x/y axis, and scale to 50-70%, affects BBs
     ])

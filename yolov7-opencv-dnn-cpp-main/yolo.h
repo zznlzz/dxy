@@ -3,7 +3,7 @@
 #include <opencv2/opencv.hpp>
 
 #ifndef YOLOV5
-#define YOLOV5 false  //true:Yolov5, false:yolov7
+#define YOLOV5 true  //true:Yolov5, false:yolov7
 #endif 
 
 #ifndef YOLO_P6

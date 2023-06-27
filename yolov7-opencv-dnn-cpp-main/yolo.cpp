@@ -44,7 +44,7 @@ bool Yolo::Detect(Mat& SrcImg, Net& net, vector<Output>& output) {
 	net.setInput(blob);
 	std::vector<cv::Mat> netOutputImg;
 	net.forward(netOutputImg, net.getUnconnectedOutLayersNames());
-#if CV_VERSION_MAJOR==4&&CV_VERSION_MINOR==6
+#if CV_VERSION_MAJOR==4&&CV_VERSION_MINOR==6 || CV_VERSION_MAJOR==4&&CV_VERSION_MINOR==7
 	std::sort(netOutputImg.begin(), netOutputImg.end(), [](Mat &A, Mat &B) {return A.size[2] > B.size[2]; });//opencv 4.6
 #endif
 	std::vector<int> classIds;//结果id数组
@@ -173,12 +173,15 @@ bool Yolo::Detect(Mat& SrcImg, Net& net, vector<Output>& output) {
 	//执行非最大抑制以消除具有较低置信度的冗余重叠框（NMS）
 	vector<int> nms_result;
 	NMSBoxes(boxes, confidences, nmsScoreThreshold, nmsThreshold, nms_result);
+	// 预测框尺寸   预测中的置信度得分   置信度   nms
+	output.clear();      
 	for (int i = 0; i < nms_result.size(); i++) {
 		int idx = nms_result[i];
 		Output result;
 		result.id = classIds[idx];
 		result.confidence = confidences[idx];
 		result.box = boxes[idx];
+		//output.clear();
 		output.push_back(result);
 	}
 	if (output.size())

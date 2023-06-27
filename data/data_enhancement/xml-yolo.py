@@ -30,9 +30,9 @@ def convert(size, box):
 
 
 def convert_annotation(image_id):
-    in_file = open('/home/zyt/1dxy/data_xml_after/xmls/%s.xml' % (image_id), encoding='UTF-8')
+    in_file = open('/home/zyt/1dxy/data/data_xml_after/xmls/%s.xml' % (image_id), encoding='UTF-8')
 
-    out_file = open('/home/zyt/1dxy/data_xml_after/labels/%s.txt' % (image_id), 'w')  # 生成txt格式文件
+    out_file = open('/home/zyt/1dxy/data/data_xml_after/labels/%s.txt' % (image_id), 'w')  # 生成txt格式文件
     tree = ET.parse(in_file)
     root = tree.getroot()
     size = root.find('size')
@@ -51,7 +51,7 @@ def convert_annotation(image_id):
         bb = convert((w, h), b)
         out_file.write(str(cls_id) + " " + " ".join([str(a) for a in bb]) + '\n')
 
-xml_path = os.path.join(CURRENT_DIR, '/home/zyt/1dxy/data_xml_after/xmls/')
+xml_path = os.path.join(CURRENT_DIR, '/home/zyt/1dxy/data/data_xml_after/xmls/')
 
 # xml list
 img_xmls = os.listdir(xml_path)

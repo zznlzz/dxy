@@ -15,9 +15,9 @@ int main()
 	string img_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/images/79.jpg";
 
 #if(defined YOLOV5 && YOLOV5==true)
-	string model_path = "models/yolov5s.onnx";
+	string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/bestv5.onnx";
 #else
-	string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/best.onnx";
+	string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/bestv7.onnx";
 #endif
 
 
@@ -63,20 +63,24 @@ int main()
 	vector<Output> result;
 	// Mat img = imread(img_path);
 	Mat img;
+	int m = 0;
     while (true)
     {
         cap >> img;
         namedWindow("camera",1);
+		
         if (img.empty() == false)
         {
 			Mat out = img;
-			// cout << "0" << endl;
             if (test.Detect(img, net, result)) {
 				out = test.drawPred(img, result, color);
 			}else {
-				cout << "Error: detect failed!" << endl;
+				m++;
 			}
-			// cout << "1" << endl;
+			if(m==20){
+				cout << "Detect failed." << endl;
+				m=0;
+			} 
 			imshow("camera", out);
         }else{
             cerr << "Error: unable to read imagine." << endl;
