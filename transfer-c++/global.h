@@ -1,1 +1,1 @@
-char * coord;
+extern char coord[50];

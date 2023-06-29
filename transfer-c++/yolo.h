@@ -3,7 +3,7 @@
 #include <opencv2/opencv.hpp>
 
 #ifndef YOLOV5
-#define YOLOV5 false  //true:Yolov5, false:yolov7
+#define YOLOV5 true  //true:Yolov5, false:yolov7
 #endif 
 
 #ifndef YOLO_P6
@@ -61,5 +61,5 @@ private:
 	float nmsThreshold = 0.45;
 	//float nmsScoreThreshold = boxThreshold * classThreshold;
 	float nmsScoreThreshold = 0.3; // 置信度
-	std::vector<std::string> className = {"H"};
+	std::vector<std::string> className = {"target"};
 };

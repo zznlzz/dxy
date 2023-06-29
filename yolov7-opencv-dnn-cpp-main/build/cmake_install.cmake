@@ -1,4 +1,4 @@
-# Install script for directory: /home/zyt/1dxy/yolov7-opencv-dnn-cpp-main
+# Install script for directory: /home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

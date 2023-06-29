@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/. -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/. -isystem /usr/local/include/opencv4
 
 CXX_FLAGS = -std=gnu++11
 

@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/zyt/1dxy/transfer-c++/transfer.cpp" "CMakeFiles/main.dir/transfer.cpp.o" "gcc" "CMakeFiles/main.dir/transfer.cpp.o.d"
-  "/home/zyt/1dxy/transfer-c++/yolo.cpp" "CMakeFiles/main.dir/yolo.cpp.o" "gcc" "CMakeFiles/main.dir/yolo.cpp.o.d"
+  "/home/zyt/111/dxy/transfer-c++/transfer.cpp" "CMakeFiles/main.dir/transfer.cpp.o" "gcc" "CMakeFiles/main.dir/transfer.cpp.o.d"
+  "/home/zyt/111/dxy/transfer-c++/yolo.cpp" "CMakeFiles/main.dir/yolo.cpp.o" "gcc" "CMakeFiles/main.dir/yolo.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "/usr/include/opencv4",
                 "/home/zyt/opencv/include",
-                "/usr/include/eigen3"
+                "/usr/include/eigen3",
+                "/usr/local/include/opencv4"
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "${default}",

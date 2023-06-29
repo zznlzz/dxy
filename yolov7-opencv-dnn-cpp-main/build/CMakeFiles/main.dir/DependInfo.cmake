@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
-  "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp" "CMakeFiles/main.dir/yolo.cpp.o" "gcc" "CMakeFiles/main.dir/yolo.cpp.o.d"
+  "/home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
+  "/home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp" "CMakeFiles/main.dir/yolo.cpp.o" "gcc" "CMakeFiles/main.dir/yolo.cpp.o.d"
   )
 
 # Targets to which this target links.

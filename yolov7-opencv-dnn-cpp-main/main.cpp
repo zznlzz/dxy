@@ -12,25 +12,31 @@ using namespace dnn;
 
 int main()
 {
-	string img_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/bulid/images/79.jpg";
-
+	string model_path_circle = "/home/zyt/111/dxy/transfer-c++/models/best_circle.onnx";
 #if(defined YOLOV5 && YOLOV5==true)
-	string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/bestv5.onnx";
+	string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv5.onnx";
 #else
-	string model_path = "/home/zyt/1dxy/yolov7-opencv-dnn-cpp-main/models/bestv7.onnx";
+	string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv7.onnx";
 #endif
 
 
 	Yolo test;
-	Net net;
-	if (test.readModel(net, model_path, USE_CUDA)) {
-		cout << "read net ok!" << endl;
+	Net net1, net2;
+	if (test.readModel(net1, model_path, USE_CUDA)) {
+		cout << "read net1 ok!" << endl;
 	}
 	else {
 		cout << "read onnx model failed!";
 		return -1;
 	}
 
+	if (test.readModel(net2, model_path_circle, USE_CUDA)) {
+		cout << "read net2 ok!" << endl;
+	}
+	else {
+		cout << "read onnx model failed!";
+		return -1;
+	}
 	//生成随机颜色
 	vector<Scalar> color;
 	srand(time(0));
@@ -47,10 +53,8 @@ int main()
     cap.set(CAP_PROP_FRAME_WIDTH,640);//图像的宽
     cap.set(CAP_PROP_FRAME_HEIGHT,640);//图像的高
 
-    int deviceID = 0;//相机设备号
-    // http://admin:admin@192.168.1.105:8081
 	//"http://admin:admin@192.168.43.1:8081"
-    cap.open(0);
+    cap.open("http://admin:admin@192.168.43.1:8081");
     if (!cap.isOpened())
     {
         cerr << "Error: unable to open camera." << endl;
@@ -72,11 +76,16 @@ int main()
         if (img.empty() == false)
         {
 			Mat out = img;
-            if (test.Detect(img, net, result)) {
+            if (test.Detect(img, net1, result)) {
 				out = test.drawPred(img, result, color);
 			}else {
 				m++;
 			}
+            if (test.Detect(img, net2, result)) {
+				out = test.drawPred(img, result, color);
+			}else {
+				m++;
+			}			
 			if(m==20){
 				cout << "Detect failed." << endl;
 				m=0;

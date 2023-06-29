@@ -522,4 +522,7 @@ CMakeFiles/1.dir/capture.cpp.o: /home/zyt/1dxy/Circle_detect/capture.cpp \
  /usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/./RealQZ.h \
- /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+ /usr/local/include/opencv4/opencv2/cudaimgproc.hpp \
+ /usr/local/include/opencv4/opencv2/cudaarithm.hpp \
+ /usr/local/include/opencv4/opencv2/cudafilters.hpp

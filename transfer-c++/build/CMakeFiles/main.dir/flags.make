@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/include/eigen3 -I/home/zyt/1dxy/transfer-c++/. -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/usr/include/eigen3 -I/home/zyt/111/dxy/transfer-c++/. -isystem /usr/local/include/opencv4
 
 CXX_FLAGS = -std=gnu++11
 

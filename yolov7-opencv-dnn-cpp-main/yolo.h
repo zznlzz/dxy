@@ -61,5 +61,5 @@ private:
 	float nmsThreshold = 0.45;
 	//float nmsScoreThreshold = boxThreshold * classThreshold;
 	float nmsScoreThreshold = 0.3; // 置信度
-	std::vector<std::string> className = {"H"};
+	std::vector<std::string> className = {"target"};
 };
