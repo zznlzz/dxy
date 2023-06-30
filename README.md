@@ -17,6 +17,9 @@
 ### **transfer-c++** <br>
 + 用于将地面站与树莓派通信，传递坐标  <br>
 + 已经将检测圆和H的代码部署进去了，最终是使用这个代码  <br>
++ 下载链接
+<a href="transfer-c++/models/bestv5.onnx" target="_blank">bestv5.onnx</a>
+<a href="transfer-c++/models/best_circle.onnx" target="_blank">best_circle.onnx</a>
 
 ---
 + 6.29更新：

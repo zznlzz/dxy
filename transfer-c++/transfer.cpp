@@ -5,12 +5,7 @@
 #include <math.h>
 #include "yolo.h"
 #include <iostream>
-#include <Eigen/Core> // 稠密矩阵代数运算（逆、特征值等）
-#include <Eigen/Dense>
-using namespace Eigen;
-
-// #include "HoughCircles.cpp"
-// #include "global.h"
+#include "global.h"
 
 #define USE_CUDA true
 
@@ -19,14 +14,34 @@ using namespace cv;
 using namespace dnn;
 
 cv::Mat hough(cv::Mat src);
-char coord[50] = {0};
+
+char coord[50];
 int flag = 0;
+Matrix3d K; // 内参矩阵
+Vector2d D; // 畸变矩阵
 
 int main()
 {
     extern int flag;
     string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv5.onnx";
     string model_path_circle = "/home/zyt/111/dxy/transfer-c++/models/best_circle.onnx";
+
+    // K << 5.866604127618223e+02, 0, 0,
+    //     0, 5.862334531989521e+02, 0,
+    //     3.091697495003905e+02, 2.301569065668424e+02, 1;
+
+    // D << 0.108035628286270, -0.264954789302431;
+
+    cv::Mat K = (cv::Mat_<double>(3, 3) <<
+    5.866604127618223e+02, 0, 3.091697495003905e+02,
+    0, 5.862334531989521e+02, 2.301569065668424e+02,
+    0, 0, 1);
+
+    cv::Mat D = (cv::Mat_<double>(2, 1) << 0.108035628286270, -0.264954789302431);
+
+    double k1 = -0.28340811, k2 = 0.07395907, p1 = 0.00019359, p2 = 1.76187114e-05;
+    // 相机内参
+    double fx = 458.654, fy = 457.296, cx = 367.215, cy = 248.375;
 
     coord[0] = '0';
 
@@ -101,11 +116,13 @@ int main()
 
         // 将图像数据转换成图像格式
         Mat img = imdecode(Mat(1, size, CV_8UC1, data_buf), IMREAD_COLOR);
+        Mat out;
+        
+        // 图像去畸变
+        undistort(img, out, K, D, K);
+        // imshow("0", out);
 
-        // 显示图像
-        // img = hough(img);
-        // cout << 0 ;
-        if (test.Detect(img, net1, result))
+        if (test.Detect(out, net1, result))
         {
             img = test.drawPred(img, result, color);
         }
@@ -113,16 +130,10 @@ int main()
         {
             img = test.drawPred(img, result, color);
         }
-        // else {
-        //  	cout << "detect failed!" << endl;
-        //  }
+
         imshow("frame", img);
 
-        // if (flag == 1){
-        // send(sock, "0", 1, 0);
         send(sock, coord, strlen(coord), 0);
-        // std::cout << "坐标数据已发送" << std::endl;
-        // }
 
         if (waitKey(1) == 'q')
         {
@@ -157,40 +168,26 @@ cv::Mat hough(cv::Mat src)
         cv::circle(src, cv::Point(c[0], c[1]), c[2], cv::Scalar(0, 255, 255), 3, cv::LINE_AA); // 圆周
         cv::circle(src, cv::Point(c[0], c[1]), 2, cv::Scalar(255, 0, 0), 3, cv::LINE_AA);      // 圆心
         // std::cout << "x = " << c[0] << "y = " << c[1] << std::endl;
-
-        Matrix3d K; // 内参矩阵
-        K << 5.866604127618223e+02, 0, 0,
-            0, 5.862334531989521e+02, 0,
-            3.091697495003905e+02, 2.301569065668424e+02, 1;
-
-        // 畸变矩阵
-        Vector2d D;
-        D << 0.108035628286270, -0.264954789302431;
-
-        // 像素坐标
-        Vector2d p;
-        p << c[0], c[1];
-
-        // 归一化坐标
-        Vector3d p_norm = K.inverse() * Vector3d(p(0), p(1), 1);
-
-        // 去除畸变
-        double r2 = p_norm(0) * p_norm(0) + p_norm(1) * p_norm(1);
-        Vector2d p_undistorted = p_norm.head<2>() * (1 + r2 * D(0)) + Vector2d(2 * D(1) * p_norm(0) * p_norm(1), D(0) * (r2 + 2 * p_norm(0) * p_norm(0)));
-
-        // 像素坐标
-        Vector3d p_pixel = K * Vector3d(p_undistorted(0), p_undistorted(1), 1);
-
-        Vector2d p_actual_pixel(p_pixel(0) / p_pixel(2), p_pixel(1) / p_pixel(2));
-        std::cout << "去除畸变后的像素坐标：(" << p_actual_pixel(0) << ", " << p_actual_pixel(1) << ")" << std::endl;
-
-        char xx[20] = {0};
-        char yy[20] = {0};
-        sprintf(xx, "%.6f", p_actual_pixel(0));
-        sprintf(yy, "%.6f", p_actual_pixel(1));
-        strcpy(coord, xx);
-        strcat(coord, ",");
-        strcat(coord, yy);
+        strcpy(coord, getUndistortedPixelCoord(c[0], c[1]));
     }
     return src;
+}
+
+char *getUndistortedPixelCoord(double x, double y)
+{
+    Eigen::Vector3d p;
+    p << x, y, 1;
+
+    // Eigen::Vector3d p_norm = K.inverse() * Eigen::Vector3d(p(0), p(1), 1);
+    Eigen::Vector3d p_norm = K * p;
+    double r2 = p_norm(0) * p_norm(0) + p_norm(1) * p_norm(1);
+    Eigen::Vector2d p_undistorted = p_norm.head<2>() * (1 + r2 * D(0)) + Eigen::Vector2d(2 * D(1) * p_norm(0) * p_norm(1), D(0) * (r2 + 2 * p_norm(0) * p_norm(0)));
+
+    // Eigen::Vector3d p_pixel = K * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
+    Eigen::Vector3d p_pixel = K.inverse() * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
+    Eigen::Vector2d p_actual_pixel(p_pixel(0) / p_pixel(2), p_pixel(1) / p_pixel(2));
+
+    char *str = new char[50];
+    sprintf(str, "%.6f,%.6f", p_actual_pixel(0), p_actual_pixel(1));
+    return str;
 }
