@@ -22,7 +22,10 @@
 <a href="transfer-c++/models/best_circle.onnx" target="_blank">best_circle.onnx</a>
 
 ---
-+ 6.29更新：
++ **6.29更新**
 1. 检测H和检测圆筒都替换为使用yolov5
 2. 检测圆的传统视觉方案仍保留，增加了筛选白色
 3. 使yolo检测坐标也能成功传输
+---
++ **6.30更新**
+1. 弃用eigen库，改用OpenCV的undistort函数去除图像畸变再进行检测
