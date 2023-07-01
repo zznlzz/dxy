@@ -5,6 +5,7 @@
 #include <math.h>
 #include "yolo.h"
 #include <iostream>
+#include <cmath>
 #include "global.h"
 
 #define USE_CUDA true
@@ -16,13 +17,17 @@ using namespace dnn;
 cv::Mat hough(cv::Mat src);
 
 char coord[50];
-int flag = 0;
+int flag_servo = 0;
+int target_x = 325;
+int target_y = 240;
+int n = 0;
 Matrix3d K; // 内参矩阵
 Vector2d D; // 畸变矩阵
+double calculateDistance(double x1, double y1, double x2, double y2);
+void drive_servo(char *str, int target_x, int target_y, int m);
 
 int main()
 {
-    extern int flag;
     string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv5.onnx";
     string model_path_circle = "/home/zyt/111/dxy/transfer-c++/models/best_circle.onnx";
 
@@ -32,12 +37,11 @@ int main()
 
     // D << 0.108035628286270, -0.264954789302431;
 
-    cv::Mat K = (cv::Mat_<double>(3, 3) <<
-    5.866604127618223e+02, 0, 3.091697495003905e+02,
-    0, 5.862334531989521e+02, 2.301569065668424e+02,
-    0, 0, 1);
+    cv::Mat K = (cv::Mat_<double>(3, 3) << 5.866604127618223e+02, 0, 3.091697495003905e+02,
+                 0, 5.862334531989521e+02, 2.301569065668424e+02,
+                 0, 0, 1);
 
-    cv::Mat D = (cv::Mat_<double>(2, 1) << 0.108035628286270, -0.264954789302431);
+    cv::Mat D = (cv::Mat_<double>(4, 1) << 0.108035628286270, -0.264954789302431, 0, 0);
 
     double k1 = -0.28340811, k2 = 0.07395907, p1 = 0.00019359, p2 = 1.76187114e-05;
     // 相机内参
@@ -111,18 +115,17 @@ int main()
             {
                 break;
             }
-            data_received += ret;
+   int n;         data_received += ret;
         }
 
         // 将图像数据转换成图像格式
-        Mat img = imdecode(Mat(1, size, CV_8UC1, data_buf), IMREAD_COLOR);
-        Mat out;
-        
-        // 图像去畸变
-        undistort(img, out, K, D, K);
-        // imshow("0", out);
+        Mat src = imdecode(Mat(1, size, CV_8UC1, data_buf), IMREAD_COLOR);
+        Mat img;
 
-        if (test.Detect(out, net1, result))
+        // 图像去畸变
+        undistort(src, img, K, D, K);
+
+        if (test.Detect(img, net1, result))
         {
             img = test.drawPred(img, result, color);
         }
@@ -130,8 +133,9 @@ int main()
         {
             img = test.drawPred(img, result, color);
         }
-
         imshow("frame", img);
+
+        drive_servo(coord, target_x, target_y, 66);
 
         send(sock, coord, strlen(coord), 0);
 
@@ -147,47 +151,72 @@ int main()
     return 0;
 }
 
-cv::Mat hough(cv::Mat src)
+void drive_servo(char *str, int target_x, int target_y, int m)
 {
-    extern int flag;
-    cv::Mat dst, out;
-    // cv::medianBlur(src, dst, 3);
-    cv::cvtColor(src, dst, cv::COLOR_RGB2GRAY); // 改为灰度图
-    // cv::GaussianBlur(dst, dst, cv::Size(9, 9), 2, 2);
-    cv::bilateralFilter(dst, out, 3, 100, 100);
-    std::vector<cv::Vec3f> circles;
-    cv::HoughCircles(out, circles, cv::HOUGH_GRADIENT_ALT, 1.5, 500, 300, 0.8); // 霍夫圆检测
-    // dp-累加分辨率大小-默认为1   两圆心之间最小距离   Canny边缘检测高阈值-低阈值自动为高阈值一半
-    // 越大检测的圆越接近完美圆形   圆半径最小值   圆半径最大值
-    // dp值越大，累加器分辨率越低，运行速度越快
-    flag = 0;
-    for (int i = 0; i < circles.size(); i++)
+    int x, y, r;
+    int rmax = 20;
+    if (sscanf(str, "%d,%d", &x, &y) == 2)
     {
-        flag = 1;
-        cv::Vec3f c = circles[i];
-        cv::circle(src, cv::Point(c[0], c[1]), c[2], cv::Scalar(0, 255, 255), 3, cv::LINE_AA); // 圆周
-        cv::circle(src, cv::Point(c[0], c[1]), 2, cv::Scalar(255, 0, 0), 3, cv::LINE_AA);      // 圆心
-        // std::cout << "x = " << c[0] << "y = " << c[1] << std::endl;
-        strcpy(coord, getUndistortedPixelCoord(c[0], c[1]));
+        r = calculateDistance(x, y, target_x, target_y);
+
+        if (r <= rmax)
+            n++;
+        else
+            n = 0;
+
+        if (n >= m) flag_servo = 1;
     }
-    return src;
 }
 
-char *getUndistortedPixelCoord(double x, double y)
+double calculateDistance(double x1, double y1, double x2, double y2)
 {
-    Eigen::Vector3d p;
-    p << x, y, 1;
-
-    // Eigen::Vector3d p_norm = K.inverse() * Eigen::Vector3d(p(0), p(1), 1);
-    Eigen::Vector3d p_norm = K * p;
-    double r2 = p_norm(0) * p_norm(0) + p_norm(1) * p_norm(1);
-    Eigen::Vector2d p_undistorted = p_norm.head<2>() * (1 + r2 * D(0)) + Eigen::Vector2d(2 * D(1) * p_norm(0) * p_norm(1), D(0) * (r2 + 2 * p_norm(0) * p_norm(0)));
-
-    // Eigen::Vector3d p_pixel = K * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
-    Eigen::Vector3d p_pixel = K.inverse() * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
-    Eigen::Vector2d p_actual_pixel(p_pixel(0) / p_pixel(2), p_pixel(1) / p_pixel(2));
-
-    char *str = new char[50];
-    sprintf(str, "%.6f,%.6f", p_actual_pixel(0), p_actual_pixel(1));
-    return str;
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+    double distance = std::sqrt(dx * dx + dy * dy);
+    return distance;
 }
+
+// cv::Mat hough(cv::Mat src)
+// {
+//     extern int flag;
+//     cv::Mat dst, out;
+//     // cv::medianBlur(src, dst, 3);
+//     cv::cvtColor(src, dst, cv::COLOR_RGB2GRAY); // 改为灰度图
+//     // cv::GaussianBlur(dst, dst, cv::Size(9, 9), 2, 2);
+//     cv::bilateralFilter(dst, out, 3, 100, 100);
+//     std::vector<cv::Vec3f> circles;
+//     cv::HoughCircles(out, circles, cv::HOUGH_GRADIENT_ALT, 1.5, 500, 300, 0.8); // 霍夫圆检测
+//     // dp-累加分辨率大小-默认为1   两圆心之间最小距离   Canny边缘检测高阈值-低阈值自动为高阈值一半
+//     // 越大检测的圆越接近完美圆形   圆半径最小值   圆半径最大值
+//     // dp值越大，累加器分辨率越低，运行速度越快
+//     flag = 0;
+//     for (int i = 0; i < circles.size(); i++)
+//     {
+//         flag = 1;
+//         cv::Vec3f c = circles[i];
+//         cv::circle(src, cv::Point(c[0], c[1]), c[2], cv::Scalar(0, 255, 255), 3, cv::LINE_AA); // 圆周
+//         cv::circle(src, cv::Point(c[0], c[1]), 2, cv::Scalar(255, 0, 0), 3, cv::LINE_AA);      // 圆心
+//         // std::cout << "x = " << c[0] << "y = " << c[1] << std::endl;
+//         strcpy(coord, getUndistortedPixelCoord(c[0], c[1]));
+//     }
+//     return src;
+// }
+
+// char *getUndistortedPixelCoord(double x, double y)
+// {
+//     Eigen::Vector3d p;
+//     p << x, y, 1;
+
+//     // Eigen::Vector3d p_norm = K.inverse() * Eigen::Vector3d(p(0), p(1), 1);
+//     Eigen::Vector3d p_norm = K * p;
+//     double r2 = p_norm(0) * p_norm(0) + p_norm(1) * p_norm(1);
+//     Eigen::Vector2d p_undistorted = p_norm.head<2>() * (1 + r2 * D(0)) + Eigen::Vector2d(2 * D(1) * p_norm(0) * p_norm(1), D(0) * (r2 + 2 * p_norm(0) * p_norm(0)));
+
+//     // Eigen::Vector3d p_pixel = K * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
+//     Eigen::Vector3d p_pixel = K.inverse() * Eigen::Vector3d(p_undistorted(0), p_undistorted(1), 1);
+//     Eigen::Vector2d p_actual_pixel(p_pixel(0) / p_pixel(2), p_pixel(1) / p_pixel(2));
+
+//     char *str = new char[50];
+//     sprintf(str, "%.6f,%.6f", p_actual_pixel(0), p_actual_pixel(1));
+//     return str;
+// }

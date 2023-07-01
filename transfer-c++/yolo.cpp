@@ -5,6 +5,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::dnn;
 
+
 bool Yolo::readModel(Net &net, string &netPath, bool isCuda = false)
 {
 	try
@@ -242,7 +243,7 @@ Mat Yolo::drawPred(Mat src, vector<Output> result, vector<Scalar> color)
 		// cv::Mat coord_mat;
 		// undistortPoints(coord_origin, coord_mat, K, D);
 		// sprintf(coord, "%.6f,%.6f", coord_mat(0), coord_mat(1));
-		sprintf(coord, "%d,%d", center_x, center_y);
+		sprintf(coord, "%d,%d,%d", center_x, center_y, flag_servo);
 
 
 	}
