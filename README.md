@@ -29,3 +29,7 @@
 ---
 + **6.30更新**
 1. 弃用eigen库，改用OpenCV的undistort函数去除图像畸变再进行检测
+---
++ **7.1更新**
+1. 增加全局变量flag_servo用于控制舵机，增加目标点
++ 传输的coord格式变为"x,y,flag_servo"
