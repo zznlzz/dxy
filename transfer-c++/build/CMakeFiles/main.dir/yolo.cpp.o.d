@@ -1,5 +1,5 @@
-CMakeFiles/main.dir/yolo.cpp.o: /home/zyt/111/dxy/transfer-c++/yolo.cpp \
- /usr/include/stdc-predef.h /home/zyt/111/dxy/transfer-c++/yolo.h \
+CMakeFiles/main.dir/yolo.cpp.o: /home/zyt/1dxy/dxy/transfer-c++/yolo.cpp \
+ /usr/include/stdc-predef.h /home/zyt/1dxy/dxy/transfer-c++/yolo.h \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -335,7 +335,7 @@ CMakeFiles/main.dir/yolo.cpp.o: /home/zyt/111/dxy/transfer-c++/yolo.cpp \
  /usr/local/include/opencv4/opencv2/video.hpp \
  /usr/local/include/opencv4/opencv2/video/tracking.hpp \
  /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
- /home/zyt/111/dxy/transfer-c++/global.h /usr/include/eigen3/Eigen/Core \
+ /home/zyt/1dxy/dxy/transfer-c++/global.h /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
  /usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h \

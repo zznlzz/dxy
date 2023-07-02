@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/transfer.cpp.o: \
- /home/zyt/111/dxy/transfer-c++/transfer.cpp /usr/include/stdc-predef.h \
+ /home/zyt/1dxy/dxy/transfer-c++/transfer.cpp /usr/include/stdc-predef.h \
  /usr/local/include/opencv4/opencv2/opencv.hpp \
  /usr/local/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/local/include/opencv4/opencv2/core.hpp \
@@ -359,8 +359,8 @@ CMakeFiles/main.dir/transfer.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h /home/zyt/111/dxy/transfer-c++/yolo.h \
- /home/zyt/111/dxy/transfer-c++/global.h /usr/include/eigen3/Eigen/Core \
+ /usr/include/linux/close_range.h /home/zyt/1dxy/dxy/transfer-c++/yolo.h \
+ /home/zyt/1dxy/dxy/transfer-c++/global.h /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
  /usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h \

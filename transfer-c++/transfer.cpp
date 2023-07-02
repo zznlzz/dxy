@@ -18,7 +18,7 @@ cv::Mat hough(cv::Mat src);
 
 char coord[50];
 int flag_servo = 0;
-int target_x = 325;
+int target_x = 320;
 int target_y = 240;
 int n = 0;
 Matrix3d K; // 内参矩阵
@@ -28,14 +28,8 @@ void drive_servo(char *str, int target_x, int target_y, int m);
 
 int main()
 {
-    string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv5.onnx";
-    string model_path_circle = "/home/zyt/111/dxy/transfer-c++/models/best_circle.onnx";
-
-    // K << 5.866604127618223e+02, 0, 0,
-    //     0, 5.862334531989521e+02, 0,
-    //     3.091697495003905e+02, 2.301569065668424e+02, 1;
-
-    // D << 0.108035628286270, -0.264954789302431;
+    string model_path = "/home/zyt/1dxy/dxy/transfer-c++/models/bestv5.onnx";
+    string model_path_circle = "/home/zyt/1dxy/dxy/transfer-c++/models/best_circle.onnx";
 
     cv::Mat K = (cv::Mat_<double>(3, 3) << 5.866604127618223e+02, 0, 3.091697495003905e+02,
                  0, 5.862334531989521e+02, 2.301569065668424e+02,
@@ -43,11 +37,7 @@ int main()
 
     cv::Mat D = (cv::Mat_<double>(4, 1) << 0.108035628286270, -0.264954789302431, 0, 0);
 
-    double k1 = -0.28340811, k2 = 0.07395907, p1 = 0.00019359, p2 = 1.76187114e-05;
-    // 相机内参
-    double fx = 458.654, fy = 457.296, cx = 367.215, cy = 248.375;
-
-    coord[0] = '0';
+    coord[0] = '0'; // 字符串赋初值，不然发送数据会阻塞
 
     Yolo test;
     Net net1, net2;
@@ -57,7 +47,7 @@ int main()
     }
     else
     {
-        cout << "read onnx model failed!";
+        cout << "read onnx1 model failed!";
         return -1;
     }
 
@@ -67,7 +57,7 @@ int main()
     }
     else
     {
-        cout << "read onnx model failed!";
+        cout << "read onnx2 model failed!";
         return -1;
     }
 
@@ -115,7 +105,8 @@ int main()
             {
                 break;
             }
-   int n;         data_received += ret;
+            int n;
+            data_received += ret;
         }
 
         // 将图像数据转换成图像格式
@@ -151,7 +142,7 @@ int main()
     return 0;
 }
 
-void drive_servo(char *str, int target_x, int target_y, int m)
+void drive_servo(char *str, int target_x, int target_y, int times)
 {
     int x, y, r;
     int rmax = 20;
@@ -164,10 +155,12 @@ void drive_servo(char *str, int target_x, int target_y, int m)
         else
             n = 0;
 
-        if (n >= m) flag_servo = 1;
+        if (n >= times)
+            flag_servo = 1;
     }
 }
 
+// 计算两点间距离
 double calculateDistance(double x1, double y1, double x2, double y2)
 {
     double dx = x2 - x1;
