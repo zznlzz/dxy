@@ -1,7 +1,7 @@
 CMakeFiles/main.dir/yolo.cpp.o: \
- /home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp \
+ /home/zyt/1dxy/dxy/yolov7-opencv-dnn-cpp-main/yolo.cpp \
  /usr/include/stdc-predef.h \
- /home/zyt/111/dxy/yolov7-opencv-dnn-cpp-main/yolo.h \
+ /home/zyt/1dxy/dxy/yolov7-opencv-dnn-cpp-main/yolo.h \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

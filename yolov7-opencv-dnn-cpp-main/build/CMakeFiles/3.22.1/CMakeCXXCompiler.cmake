@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/usr/bin/c++")
+set(CMAKE_CXX_COMPILER "/usr/lib/ccache/c++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "11.3.0")
@@ -79,5 +79,5 @@ endif()
 
 set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/include/c++/11;/usr/include/x86_64-linux-gnu/c++/11;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-linux-gnu/11;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/zyt/ros_catkin_ws/install_isolated/lib;/opt/gcc-arm-none-eabi-10-2020-q4-major/lib;/home/zyt/.local/lib;/usr/local/lib;/usr/lib;/lib;/home/zyt/environment/TensorRT-8.6.1.6/lib;/usr/lib/gcc/x86_64-linux-gnu/11;/usr/lib/x86_64-linux-gnu;/lib/x86_64-linux-gnu;/home/zyt/ros_catkin_ws/install_isolated/bin;/usr/local/cuda-12.1/bin;/usr/lib/ccache;/home/zyt/ardupilot/Tools/autotest;/opt/gcc-arm-none-eabi-10-2020-q4-major/bin;/home/zyt/.local/bin;/usr/local/sbin;/usr/local/bin;/usr/sbin;/usr/bin;/sbin;/bin;/usr/games;/usr/local/games;/snap/bin")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

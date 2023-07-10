@@ -210,7 +210,6 @@ bool Yolo::Detect(Mat &SrcImg, Net &net, vector<Output> &output)
 		result.id = classIds[idx];
 		result.confidence = confidences[idx];
 		result.box = boxes[idx];
-		// output.clear();
 		output.push_back(result);
 	}
 	if (output.size())
@@ -221,11 +220,13 @@ bool Yolo::Detect(Mat &SrcImg, Net &net, vector<Output> &output)
 #endif
 Mat Yolo::drawPred(Mat src, vector<Output> result, vector<Scalar> color)
 {
+	int left_max = 0, right_max = 0, up_max = 0, down_max = 0;
+	int left[10], top[10];
 	for (int i = 0; i < result.size(); i++)
 	{
-		int left, top;
-		left = result[i].box.x;
-		top = result[i].box.y;
+		
+		left[i] = result[i].box.x;
+		top[i] = result[i].box.y;
 		int color_num = i;
 		rectangle(src, result[i].box, color[result[i].id], 2, 5);
 
@@ -233,19 +234,34 @@ Mat Yolo::drawPred(Mat src, vector<Output> result, vector<Scalar> color)
 
 		int baseLine;
 		Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine); // 绘制置信度
-		top = max(top, labelSize.height);
-		putText(src, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 1, color[result[i].id], 2);
+		top[i] = max(top[i], labelSize.height);
+		putText(src, label, Point(left[i], top[i]), FONT_HERSHEY_SIMPLEX, 1, color[result[i].id], 2);
 
-		int center_x = left + (result[i].box.width / 2);
-		int center_y = top + (result[i].box.height / 2);
-		//strcpy(coord, getUndistortedPixelCoord(center_x, center_y));
-		// cv::Mat coord_origin = (cv::Mat_<double>(2, 1) << center_x, center_y);
-		// cv::Mat coord_mat;
-		// undistortPoints(coord_origin, coord_mat, K, D);
-		// sprintf(coord, "%.6f,%.6f", coord_mat(0), coord_mat(1));
-		sprintf(coord, "%d,%d,%d", center_x, center_y, flag_servo);
+		int center_x = left[i] + (result[i].box.width / 2);
+		int center_y = top[i] + (result[i].box.height / 2);
 
+		if((left[left_max] + (result[left_max].box.width / 2)) > center_x)
+			left_max = i;
+		if((left[right_max] + (result[right_max].box.width / 2)) < center_x)
+			right_max = i;
+		if((top[up_max] + (result[up_max].box.height / 2)) > center_y)
+			up_max = i;
+		if((top[down_max] + (result[down_max].box.height / 2)) < center_y)
+			down_max = i;
 
+		
 	}
+
+	int left_x = left[left_max] + result[left_max].box.width/2, left_y = top[left_max] + result[left_max].box.height/2;
+	int right_x = left[right_max] + result[right_max].box.width/2, right_y = top[right_max] + result[right_max].box.height/2;
+	int up_x = left[up_max] + result[up_max].box.width/2, up_y = top[up_max] + result[up_max].box.height/2;
+	int down_x = left[down_max] + result[down_max].box.width/2, down_y = top[down_max] + result[down_max].box.height/2;
+
+	cv::circle(src, cv::Point(left_x,left_y), 2, cv::Scalar(255,0,0), 3, cv::LINE_AA);// 蓝色
+	cv::circle(src, cv::Point(right_x,right_y), 2, cv::Scalar(0,255,0), 3, cv::LINE_AA);// 绿色
+	cv::circle(src, cv::Point(up_x,up_y), 2, cv::Scalar(0,0,255), 3, cv::LINE_AA);// 红色
+	cv::circle(src, cv::Point(down_x,down_y), 2, cv::Scalar(0,255,255), 3, cv::LINE_AA);// 黄色
+
+	sprintf(coord, "%d,%d,%d", right_x, right_y, flag_servo);
 	return src;
 }

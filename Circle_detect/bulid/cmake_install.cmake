@@ -1,4 +1,4 @@
-# Install script for directory: /home/zyt/1dxy/Circle_detect
+# Install script for directory: /home/zyt/1dxy/dxy/Circle_detect
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zyt/1dxy/Circle_detect/bulid/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zyt/1dxy/dxy/Circle_detect/bulid/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

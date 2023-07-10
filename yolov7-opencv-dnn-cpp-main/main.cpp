@@ -12,11 +12,11 @@ using namespace dnn;
 
 int main()
 {
-	string model_path_circle = "/home/zyt/111/dxy/transfer-c++/models/best_circle.onnx";
+	string model_path_circle = "/home/zyt/1dxy/dxy/transfer-c++/models/best_circle.onnx";
 #if(defined YOLOV5 && YOLOV5==true)
-	string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv5.onnx";
+	string model_path = "/home/zyt/1dxy/dxy/transfer-c++/models/bestv5.onnx";
 #else
-	string model_path = "/home/zyt/111/dxy/transfer-c++/models/bestv7.onnx";
+	string model_path = "/home/zyt/1dxy/dxy/transfer-c++/models/bestv7.onnx";
 #endif
 
 
@@ -54,7 +54,7 @@ int main()
     cap.set(CAP_PROP_FRAME_HEIGHT,640);//图像的高
 
 	//"http://admin:admin@192.168.43.1:8081"
-    cap.open("http://admin:admin@192.168.43.1:8081");
+    cap.open(0);
     if (!cap.isOpened())
     {
         cerr << "Error: unable to open camera." << endl;

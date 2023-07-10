@@ -20,7 +20,7 @@ char coord[50];
 int flag_servo = 0;
 int target_x = 320;
 int target_y = 240;
-int n = 0;
+int count_servo = 0;
 Matrix3d K; // 内参矩阵
 Vector2d D; // 畸变矩阵
 double calculateDistance(double x1, double y1, double x2, double y2);
@@ -28,8 +28,8 @@ void drive_servo(char *str, int target_x, int target_y, int m);
 
 int main()
 {
-    string model_path = "/home/zyt/1dxy/dxy/transfer-c++/models/bestv5.onnx";
-    string model_path_circle = "/home/zyt/1dxy/dxy/transfer-c++/models/best_circle.onnx";
+    string model_path = "../models/bestv5.onnx";
+    string model_path_circle = "../models/best_circle.onnx";
 
     cv::Mat K = (cv::Mat_<double>(3, 3) << 5.866604127618223e+02, 0, 3.091697495003905e+02,
                  0, 5.862334531989521e+02, 2.301569065668424e+02,
@@ -126,7 +126,7 @@ int main()
         }
         imshow("frame", img);
 
-        drive_servo(coord, target_x, target_y, 66);
+        drive_servo(coord, target_x, target_y, 20);
 
         send(sock, coord, strlen(coord), 0);
 
@@ -145,17 +145,17 @@ int main()
 void drive_servo(char *str, int target_x, int target_y, int times)
 {
     int x, y, r;
-    int rmax = 20;
+    int rmax = 50;
     if (sscanf(str, "%d,%d", &x, &y) == 2)
     {
         r = calculateDistance(x, y, target_x, target_y);
-
+        
         if (r <= rmax)
-            n++;
+            count_servo++;
         else
-            n = 0;
-
-        if (n >= times)
+            count_servo = 0;
+        cout << r << "|" << count_servo << endl;
+        if (count_servo >= times)
             flag_servo = 1;
     }
 }
