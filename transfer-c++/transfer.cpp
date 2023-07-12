@@ -7,8 +7,10 @@
 #include <iostream>
 #include <cmath>
 #include "global.h"
+#include <string.h>
 
 #define USE_CUDA true
+#define ip_address  "192.168.159.182"
 
 using namespace std;
 using namespace cv;
@@ -17,10 +19,12 @@ using namespace dnn;
 cv::Mat hough(cv::Mat src);
 
 char coord[50];
-int flag_servo = 0;
+char coord_last_frame[50];
 int target_x = 320;
 int target_y = 240;
+int flag_servo = 0;
 int count_servo = 0;
+int count_nomove = 0;
 Matrix3d K; // 内参矩阵
 Vector2d D; // 畸变矩阵
 double calculateDistance(double x1, double y1, double x2, double y2);
@@ -81,7 +85,7 @@ int main()
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(8000);
-    server_addr.sin_addr.s_addr = inet_addr("192.168.43.169");
+    server_addr.sin_addr.s_addr = inet_addr(ip_address);
 
     // 连接到服务器
     connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr));
@@ -128,8 +132,15 @@ int main()
 
         drive_servo(coord, target_x, target_y, 20);
 
+        if(strcmp(coord, coord_last_frame) == 0){ // 如果连续多帧坐标相同，说明没有检测到目标，不再发送坐标数据
+            count_nomove++;
+            if (count_nomove >= 20){
+                strcpy(coord, "0");
+                count_nomove = 0;
+            }
+        }
         send(sock, coord, strlen(coord), 0);
-
+        strcpy(coord_last_frame, coord);
         if (waitKey(1) == 'q')
         {
             break;
