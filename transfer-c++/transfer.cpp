@@ -11,7 +11,7 @@
 #include <ctime>
 
 #define USE_CUDA true
-#define ip_address "192.168.43.235"
+#define ip_address "192.168.10.101"
 
 using namespace std;
 using namespace cv;
@@ -37,17 +37,27 @@ int main()
     string model_path = "../models/bestv5.onnx";
     string model_path_circle = "../models/best_circle.onnx";
 
+    // 旧摄像头参数
     // cv::Mat K = (cv::Mat_<double>(3, 3) << 5.866604127618223e+02, 0, 3.091697495003905e+02,
     //              0, 5.862334531989521e+02, 2.301569065668424e+02,
     //              0, 0, 1);
 
     // cv::Mat D = (cv::Mat_<double>(4, 1) << 0.108035628286270, -0.264954789302431, 0, 0);
 
-    cv::Mat K = (cv::Mat_<double>(3, 3) << 532.3404, 0, 319.3003,
-                                            0, 532.4891, 257.4185,
+    // camerav2参数（不加偏振片）
+    // cv::Mat K = (cv::Mat_<double>(3, 3) << 532.3404, 0, 319.3003,
+    //                                         0, 532.4891, 257.4185,
+    //                                         0, 0, 1);
+
+    // cv::Mat D = (cv::Mat_<double>(4, 1) << 0.2156, -0.3761, 0, 0);
+
+    // camerav2参数（加偏振片）
+    //【我也想不明白为什么加了偏振片畸变变小了，应该是标定板不够平】
+    cv::Mat K = (cv::Mat_<double>(3, 3) << 514.0045, 0, 321.6074,
+                                            0, 514.6655, 260.0872,
                                             0, 0, 1);
 
-    cv::Mat D = (cv::Mat_<double>(4, 1) << 0.2156, -0.3761, 0, 0);
+    cv::Mat D = (cv::Mat_<double>(4, 1) << 0.1631, -0.2023, 0, 0);
 
     coord[0] = '0'; // 字符串赋初值，不然发送数据会阻塞
 
