@@ -27,6 +27,7 @@ public:
 	bool readModel(cv::dnn::Net& net, std::string& netPath, bool isCuda);
 	bool Detect(cv::Mat& SrcImg, cv::dnn::Net& net, std::vector<Output>& output, int model_flag);
 	cv::Mat drawPred(cv::Mat img, std::vector<Output> result, std::vector<cv::Scalar> color, int model_flag);
+	void target(cv::Mat src, std::vector<Output> result, int model_flag);
 
 private:
 

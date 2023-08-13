@@ -218,6 +218,7 @@ bool Yolo::Detect(Mat &SrcImg, Net &net, vector<Output> &output, int model_flag)
 		return false;
 }
 #endif
+
 Mat Yolo::drawPred(Mat src, vector<Output> result, vector<Scalar> color, int model_flag)
 {
 	int left_max = 0, right_max = 0, up_max = 0, down_max = 0;
@@ -257,11 +258,58 @@ Mat Yolo::drawPred(Mat src, vector<Output> result, vector<Scalar> color, int mod
 	int up_x = left[up_max] + result[up_max].box.width/2, up_y = top[up_max] + result[up_max].box.height/2;
 	int down_x = left[down_max] + result[down_max].box.width/2, down_y = top[down_max] + result[down_max].box.height/2;
 
-	cv::circle(src, cv::Point(left_x,left_y), 2, cv::Scalar(255,0,0), 3, cv::LINE_AA);// 蓝色
-	cv::circle(src, cv::Point(right_x,right_y), 2, cv::Scalar(0,255,0), 3, cv::LINE_AA);// 绿色
-	cv::circle(src, cv::Point(up_x,up_y), 2, cv::Scalar(0,0,255), 3, cv::LINE_AA);// 红色
-	cv::circle(src, cv::Point(down_x,down_y), 2, cv::Scalar(0,255,255), 3, cv::LINE_AA);// 黄色
+	// cv::circle(src, cv::Point(left_x,left_y), 2, cv::Scalar(255,0,0), 3, cv::LINE_AA);// 蓝色
+	// cv::circle(src, cv::Point(right_x,right_y), 2, cv::Scalar(0,255,0), 3, cv::LINE_AA);// 绿色
+	// cv::circle(src, cv::Point(up_x,up_y), 2, cv::Scalar(0,0,255), 3, cv::LINE_AA);// 红色
+	// cv::circle(src, cv::Point(down_x,down_y), 2, cv::Scalar(0,255,255), 3, cv::LINE_AA);// 黄色
 
 	sprintf(coord, "%d,%d,%d", right_x, right_y, flag_servo);
 	return src;
+}
+
+void Yolo::target(Mat src, vector<Output> result, int model_flag)
+{
+	int left[10], top[10];
+	Mat dst[result.size()];
+	for (int i = 0; i < result.size(); i++)
+	{
+		
+		left[i] = result[i].box.x;
+		top[i] = result[i].box.y;
+		int color_num = i;
+
+		string label = className[model_flag][result[i].id] + ":" + to_string(result[i].confidence);
+
+		int baseLine;
+		Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine); // 绘制置信度
+		top[i] = max(top[i], labelSize.height);
+
+		int center_x = left[i] + (result[i].box.width / 2);
+		int center_y = top[i] + (result[i].box.height / 2);
+
+		int x, y, w, h;
+		if (result[i].box.width>=result[i].box.height){
+			x = left[i];
+			y = top[i]-(result[i].box.width-result[i].box.height)/2;
+			w = h = result[i].box.width;
+		}else{
+			x = left[i] - (result[i].box.height-result[i].box.width)/2;
+			y = top[i];
+			w = h = result[i].box.height;
+		}
+		
+		if (x > src.cols) x = src.cols;
+		if (x < 0) x = 0;
+		if (y > src.rows) y = src.rows;
+		if (y < 0) y = 0;
+		if (x+w > src.cols) w = src.cols-x;
+		if (y+h > src.rows) h = src.rows-y;
+		dst[i] = src(cv::Rect(x, y, w, h));
+		resize(dst[i], dst[i], Size(300, 300), 0, 0, INTER_LINEAR);
+
+		string window = "target" + to_string(i);
+		imshow(window, dst[i]);
+		moveWindow(window, 70+300*i, 0);
+	}
+	// return dst[0];
 }

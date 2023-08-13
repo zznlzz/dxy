@@ -153,11 +153,14 @@ int main()
         }
         if (test.Detect(img, net2, result, 0))
         {
+            test.target(img, result, 0);
             img = test.drawPred(img, result, color, 0);
+            
         }
         namedWindow("frame", WINDOW_NORMAL);
         imshow("frame", img);
-        resizeWindow("frame", 1280, 960);
+        resizeWindow("frame", 1040, 780);
+        moveWindow("frame", 0, 330);
 
         drive_servo(coord, target_x, target_y, 60);
 
